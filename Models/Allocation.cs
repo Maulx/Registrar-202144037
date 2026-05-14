@@ -8,9 +8,8 @@ using System.Web;
 
 namespace Wikimedia.Models
 {
-    public class Allocation
+    public class Allocation : Record
     {
-        public int Id { get; set; }
         public int TeacherId { get; set; }
         public int CourseId { get; set; }
         public int Year { get; set; }

@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Models.Student>
+
+@{
+    var yearsList = ((List<int>)Session["StudentsYearsList"]).OrderByDescending(y => y);
+}
+
+@foreach (int year in yearsList)
+{
+    var students = Model.Where(s => s.Year == year);
+
+    if (students.Count() > 0)
+    {
+        <details id="student_details_@year" open>
+            <summary>Cohorte @year</summary>
+
+            @foreach (var student in students)
+            {
+                <div class="StudentListLayout">
+                    <a href="@Url.Action("Details", "Students", new { id = student.Id })">
+                        <span class="studentCode">@student.Code</span>
+                        <span class="studentName">@student.LastName @student.FirstName</span>
+                    </a>
+                </div>
+            }
+        </details>
+    }
+}

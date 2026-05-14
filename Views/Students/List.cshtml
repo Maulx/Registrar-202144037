@@ -1,0 +1,71 @@
+@{
+    ViewBag.Title = "Étudiants";
+    bool search = Session["Search"] != null && (bool)Session["Search"];
+    string searchString = Session["SearchString"] != null ? (string)Session["SearchString"] : "";
+    int selectedYear = Session["SelectedStudentYear"] != null ? (int)Session["SelectedStudentYear"] : 0;
+    var years = Session["StudentsYearsList"] as List<int>;
+}
+
+<h2>Liste des étudiants</h2>
+
+<div>
+    <a href="@Url.Action("ToggleSearch", "Students")">
+        Recherche
+    </a>
+
+    <a href="@Url.Action("Create", "Students")">
+        Ajouter un étudiant
+    </a>
+</div>
+
+@if (search)
+{
+    <div>
+        <input type="text"
+               id="searchInput"
+               value="@searchString"
+               placeholder="Rechercher un étudiant..." />
+
+        <select id="yearSelect">
+            <option value="0">Toutes les années</option>
+
+            @if (years != null)
+            {
+                foreach (int year in years)
+                {
+                    <option value="@year" @(selectedYear == year ? "selected" : "")>
+                        @year
+                    </option>
+                }
+            }
+        </select>
+    </div>
+}
+
+<hr />
+
+<div id="studentsContainer"></div>
+
+@section Scripts {
+    <script>
+        function loadStudents(forceRefresh = false) {
+            $("#studentsContainer").load("/Students/GetStudents?forceRefresh=" + forceRefresh);
+        }
+
+        $(document).ready(function () {
+            loadStudents(true);
+
+            setInterval(function () {
+                loadStudents(false);
+            }, 5000);
+
+            $("#searchInput").on("change", function () {
+                window.location = "/Students/SetSearchString?value=" + encodeURIComponent($(this).val());
+            });
+
+            $("#yearSelect").on("change", function () {
+                window.location = "/Students/SetSearchYear?value=" + $(this).val();
+            });
+        });
+    </script>
+}

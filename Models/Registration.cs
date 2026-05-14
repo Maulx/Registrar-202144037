@@ -5,9 +5,8 @@ using System;
 
 namespace Models
 {
-    public class Registration
+    public class Registration : Record
     {
-        public int Id { get; set; }
         public int StudentId { get; set; }
         public int CourseId { get; set; }
         public int Year { get; set; }

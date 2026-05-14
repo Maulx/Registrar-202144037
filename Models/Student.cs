@@ -4,9 +4,8 @@ using System;
 
 namespace Models
 {
-    public class Student
+    public class Student : Record
     {
-        public int Id { get; set; }
         public string FirstName {  get; set; }
         public string LastName { get; set; }
         public string Code { get; set; }
@@ -14,5 +13,7 @@ namespace Models
         public string Email { get; set; }
         public string Phone { get; set; }
 
+        [JsonIgnore]
+        public int Year => int.Parse(Code.Substring(0, 4));
     }
 }
