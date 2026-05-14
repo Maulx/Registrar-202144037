@@ -122,7 +122,7 @@ namespace Controllers
         [UserAccess(Access.Admin)]
         public ActionResult Edit(Student student, List<int> selectedCoursesId)
         {
-            if (student.IsValid ())
+            if (student.IsValid())
             {
                 student.Id = (int)Session["id"];
                 student.Code = (string)Session["code"];
