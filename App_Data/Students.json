@@ -1,0 +1,92 @@
+[
+  {
+    "Id": 1,
+    "Code": "2026123456",
+    "FirstName": "Damien",
+    "LastName": "Tremblay",
+    "BirthDate": "2004-05-12T00:00:00",
+    "Email": "damien.tremblay@app.net",
+    "Phone": "514-555-1023"
+  },
+  {
+    "Id": 2,
+    "Code": "2026458123",
+    "FirstName": "Sophie",
+    "LastName": "Gagnon",
+    "BirthDate": "2005-01-22T00:00:00",
+    "Email": "sophie.gagnon@app.net",
+    "Phone": "450-555-8841"
+  },
+  {
+    "Id": 3,
+    "Code": "2025349812",
+    "FirstName": "Alexandre",
+    "LastName": "Roy",
+    "BirthDate": "2003-09-14T00:00:00",
+    "Email": "alexandre.roy@app.net",
+    "Phone": "514-555-2290"
+  },
+  {
+    "Id": 4,
+    "Code": "2025784411",
+    "FirstName": "Camille",
+    "LastName": "Bouchard",
+    "BirthDate": "2004-07-08T00:00:00",
+    "Email": "camille.bouchard@app.net",
+    "Phone": "438-555-6612"
+  },
+  {
+    "Id": 5,
+    "Code": "2024675520",
+    "FirstName": "Thomas",
+    "LastName": "Lefebvre",
+    "BirthDate": "2002-11-30T00:00:00",
+    "Email": "thomas.lefebvre@app.net",
+    "Phone": "579-555-4408"
+  },
+  {
+    "Id": 6,
+    "Code": "2024987315",
+    "FirstName": "Juliette",
+    "LastName": "Morin",
+    "BirthDate": "2003-03-19T00:00:00",
+    "Email": "juliette.morin@app.net",
+    "Phone": "514-555-7781"
+  },
+  {
+    "Id": 7,
+    "Code": "2023891254",
+    "FirstName": "William",
+    "LastName": "Bergeron",
+    "BirthDate": "2001-08-17T00:00:00",
+    "Email": "william.bergeron@app.net",
+    "Phone": "450-555-9150"
+  },
+  {
+    "Id": 8,
+    "Code": "2023567812",
+    "FirstName": "Laurence",
+    "LastName": "Côté",
+    "BirthDate": "2002-02-11T00:00:00",
+    "Email": "laurence.cote@app.net",
+    "Phone": "438-555-3421"
+  },
+  {
+    "Id": 9,
+    "Code": "2022673145",
+    "FirstName": "Samuel",
+    "LastName": "Pelletier",
+    "BirthDate": "2000-12-05T00:00:00",
+    "Email": "samuel.pelletier@app.net",
+    "Phone": "514-555-2810"
+  },
+  {
+    "Id": 10,
+    "Code": "2022249081",
+    "FirstName": "Émilie",
+    "LastName": "Lavoie",
+    "BirthDate": "2001-06-27T00:00:00",
+    "Email": "emilie.lavoie@app.net",
+    "Phone": "579-555-7643"
+  }
+]

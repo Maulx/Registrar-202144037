@@ -1,7 +1,7 @@
 ﻿using DAL;
 using Newtonsoft.Json;
 using System;
-using Wikimedia.Models;
+using Models;
 
 
 namespace Models

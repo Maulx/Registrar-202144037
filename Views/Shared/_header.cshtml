@@ -7,27 +7,9 @@
 
     bool search = Session["Search"] != null ? (bool)Session["Search"] : false;
     string searchString = Session["SearchString"] != null ? (string)Session["SearchString"] : "";
-    int currentMediaId = Session["CurrentMediaId"] != null ? (int)Session["CurrentMediaId"] : 0;
-    string currentMediaTitle = Session["currentMediaTitle"] != null ? (string)Session["currentMediaTitle"] : "";
-    string selectedCategory = Session["CurrentSelectedCategory"] != null ? (string)Session["CurrentSelectedCategory"] : "";
-    //var mediaSortBy = Session["MediaSortBy"] != null ? (Models.MediaSortBy)Session["MediaSortBy"] : MediaSortBy.PublishDate;
-    bool SearchAscending = Session["SortAscending"] != null ? (bool)Session["SortAscending"] : false;
 
-    //string checkSortByTitle = mediaSortBy == MediaSortBy.Title ? "fa-check" : "";
-    //string checkSortByDate = mediaSortBy == MediaSortBy.PublishDate ? "fa-check" : "";
-    //string checkSortByLikes = mediaSortBy == MediaSortBy.Likes ? "fa-check" : "";
-    //string checkSortByComments = mediaSortBy == MediaSortBy.Comments ? "fa-check" : "";
-    string iconSortBy = "";
-    string iconSortByTitle = "";
-    /*switch (mediaSortBy)
-    {
-        case MediaSortBy.Title: iconSortBy = "fa-solid fa-t"; iconSortByTitle = "Tri des vidéos par titre"; break;
-        case MediaSortBy.PublishDate: iconSortBy = "fa-regular fa-calendar"; iconSortByTitle = "Tri des vidéos par date de publication"; break;
-        case MediaSortBy.Likes: iconSortBy = "fa-regular fa-thumbs-up"; iconSortByTitle = "Tri des vidéos par nombre de j'aime"; break;
-        case MediaSortBy.Comments: iconSortBy = "fa-regular fa-comment"; iconSortByTitle = "Tri des vidéos par nombre de commentaires"; break;
-    }*/
+    int currentStudentId = Session["CurrentStudentId"] != null ? (int)Session["CurrentStudentId"] : 0;
 
-    var Categories = (List<string>)Session["Categories"];
 
     bool userConnected = Models.User.ConnectedUser != null;
     bool userIsAdmin = userConnected ? Models.User.ConnectedUser.IsAdmin : false;
@@ -60,17 +42,6 @@
                     @if (userCanWrite)
                     {
                         <a href="/@controller/Create" class="cmdIcon fa fa-circle-plus" title="Ajouter..."></a>
-                    }
-
-                    <a href="/@controller/ToggleMediaSort" class="cmdIcon @iconSortBy" title="@iconSortByTitle"></a>
-
-                    @if (SearchAscending)
-                    {
-                        <a href="/@controller/ToggleSort" class="cmdIcon fa fa-arrow-down-short-wide" title="Tri ascendant..."></a>
-                    }
-                    else
-                    {
-                        <a href="/@controller/ToggleSort" class="cmdIcon fa fa-arrow-up-wide-short" title="Tri descendant..."></a>
                     }
 
                     <a href="/@controller/ToggleSearch" class="cmdIcon fa fa-search" title="Recherche..."></a>
@@ -117,28 +88,6 @@
 
                             <div class="dropdown-divider"></div>
 
-
-                            <div class="dropdown-item item-layout">
-                                <i class="menuIcon fa"></i>
-                                <a>Trier par date</a>
-                            </div>
-                                <i class="menuIcon fa"></i>
-                                <a href="">Trier par titre<a>
-                            <div class="dropdown-item item-layout">
-                                <i class="menuIcon fa"></i>
-                                <a href="">Trier par titre</a>
-                            </div>
-                            <div class="dropdown-item item-layout">
-                                <i class="menuIcon fa"></i>
-                                <a href="">Trier par j'aimes</a>
-                            </div>
-                            <div class="dropdown-item item-layout">
-                                <i class="menuIcon fa"></i>
-                                <a href="">Trier par commentaires</a>
-                            </div>
-
-                            <div class="dropdown-divider"></div>
-
                             <div class="dropdown-item item-layout">
                                 <i class="menuIcon fa fa-info-circle"></i>
                                 <a href="/@controller/About">À propos...</a>
@@ -152,12 +101,12 @@
                     <div id="likesPanel">
                         <!-- auto refreshed -->
                     </div>
-                    @if (userCanWrite && (bool)ViewBag.IsOwner)
+                    @if (userCanWrite)
                     {
                         <a href="/@controller/Edit" class="cmdIcon fa fa-pen-to-square" title="Modifier..."></a>
                         <i class="cmdIcon fa fa-trash-can"
                            title="Effacer"
-                           onclick="bootbox.confirm(`<b style=color:red>Effacer le Media : </b><h3>@currentMediaTitle?</h3>`, function(result){ if (result) window.location = '/@controller/Delete'; })">
+                           onclick="bootbox.confirm(function(result){ if (result) window.location = '/@controller/Delete'; })">
                         </i>
                     }
 
@@ -176,7 +125,7 @@
             case "edit":
                 <div id="mainMenuPanel" class="menu">
                     <i class="cmdIcon submitCmd fa fa-circle-check" title="Soumettre" onclick="document.getElementById('submit').click()"></i>
-                    <a href="/@controller/Details/@currentMediaId" class="cmdIcon fa fa-square-xmark" title="Annuler"></a>
+                    <a href="/@controller/Details/@currentStudentId" class="cmdIcon fa fa-square-xmark" title="Annuler"></a>
                 </div>
                 break;
             case "loginsjournal":
@@ -191,7 +140,7 @@
 
     </div>
 </div>
-@if (search && controller=="medias" && action == "list")
+@if (search && controller == "medias" && action == "list")
 {
     <div class="searchBar">
         <input type="search" id="searchInput" class="section roundedBorder searchBarItem" value="@searchString" placeholder="Recherche...">

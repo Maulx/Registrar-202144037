@@ -113,7 +113,7 @@ namespace Controllers
             if (student != null)
             {
                 ViewBag.Registrations = student.NextSessionCoursesToSelectList;
-                ViewBag.Courses = DB.Courses.NextSessionToSelectList;
+                //ViewBag.Courses = DB.Courses.NextSessionToSelectList;
                 return View(DB.Students.Get(id));
             }
             return RedirectToAction("Index");
@@ -122,13 +122,13 @@ namespace Controllers
         [UserAccess(Access.Admin)]
         public ActionResult Edit(Student student, List<int> selectedCoursesId)
         {
-            if (student.IsValid())
+            /*if (student.IsValid())
             {
                 student.Id = (int)Session["id"];
                 student.Code = (string)Session["code"];
                 DB.Students.Update(student, selectedCoursesId);
                 return RedirectToAction("Details", new { id = student.Id });
-            }
+            }*/
             return Redirect("/Accounts/Login?message=Accès illégal! &success=false");
         }
     }

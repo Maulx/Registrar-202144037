@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using System;
 
 
-namespace Wikimedia.Models
+namespace Models
 {
     public class Teacher : Record
     {

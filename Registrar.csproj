@@ -126,6 +126,7 @@
     </Compile>
     <Compile Include="Models\Allocation.cs" />
     <Compile Include="Models\AllocationsRepository.cs" />
+    <Compile Include="Models\RegistrationsRepository.cs" />
     <Compile Include="Models\SelectListUtilities.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\CoursesRepository.cs" />
@@ -180,6 +181,7 @@
     <Content Include="Scripts\autoRefreshPanel.js" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\image-control.js" />
+    <Content Include="Scripts\DetailsState.js" />
     <Content Include="Scripts\jquery-maskedinput.js" />
     <Content Include="Scripts\pageManager.js" />
     <Content Include="Scripts\selections.js" />
@@ -217,8 +219,6 @@
     <Content Include="App_Data\Events.json" />
     <Content Include="App_Data\Likes.json" />
     <Content Include="App_Data\Logins.json" />
-    <Content Include="App_Data\Medias.json" />
-    <Content Include="App_Data\MediasAzure.json" />
     <Content Include="App_Data\Notifications.json" />
     <Content Include="App_Data\RenewPasswordCommands.json" />
     <Content Include="App_Data\Students.json" />

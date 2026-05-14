@@ -1,6 +1,8 @@
 ﻿
 @{
     ViewBag.Title = "StudentForm";
+    bool creating = ViewBag.Creating;
+    string session = ViewBag.Session;
 }
 
 <h2>StudentForm</h2>
@@ -9,7 +11,7 @@
 if (!creating)
 {
     <details open>
-        <summary>@session </summary>
+        <summary>@session</summary>
         @Helper.SelectionLists("selectedCoursesId" , (SelectList)ViewBag.Registrations, (SelectList)ViewBag.Courses)
     </details>
 }
