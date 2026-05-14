@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "Session courante";
+    ViewBag.PageTitle = "Session courante";
+
+    int year = Models.NextSession.Year;
+    bool automne = Models.NextSession.ValidSessions.Contains(1);
+}
+
+<form method="post">
+    <p class="text-primary">
+        Choisissez l'année et la session pour les prochaines allocations de cours :
+    </p>
+
+    <hr />
+
+    <label>Année</label>
+    <input type="number" name="year" class="form-control" value="@year" />
+
+    <fieldset class="roundedBorder">
+        <legend>Session</legend>
+
+        <label>
+            <input type="radio" name="session" value="Automne" @(automne ? "checked" : "") />
+            Automne
+        </label>
+
+        <label>
+            <input type="radio" name="session" value="Hiver" @(!automne ? "checked" : "") />
+            Hiver
+        </label>
+    </fieldset>
+</form>

@@ -13,7 +13,9 @@
             <i class="fa fa-paper-plane"></i> @Model.Email
         </p>
         <p>Embauché le @Model.StartDate.ToString("d MMMM yyyy")</p>
-        <img src="@Url.Content(Model.Avatar)" class="teacherAvatar" />
+            @Helper.Avatar(Model.Avatar, "teacherAvatar")
+
+        
     </div>
 </details>
 <h4>Allocations</h4>

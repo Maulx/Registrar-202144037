@@ -27,11 +27,14 @@
         </div>
 
         <div id="footerPanel" class="section footerPanel roundedBorder">
-            &copy; @DateTime.Now.Year - Application Web
-            <img src="/updatingView.gif" 
-                 style="width:24px; display:none" 
+            <a href="@Url.Action("Edit", "NextSession")" class="currentSession">
+                <b>Session courante : @Models.NextSession.ShortCaption</b>
+            </a>
+
+            <img src="/updatingView.gif"
+                 style="width:24px; display:none"
                  id="updatingView"
-                 title="Rafraichissement de la vue"/>
+                 title="Rafraichissement de la vue" />
         </div>
 
     </div>

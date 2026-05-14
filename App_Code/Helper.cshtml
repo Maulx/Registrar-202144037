@@ -361,4 +361,11 @@
             allowfullscreen>
     </iframe>
 }
+@helper Avatar(string avatar, string cssClass = "avatar")
+{
+    var url = System.Web.VirtualPathUtility.ToAbsolute("~/App_Assets/Users/" + avatar);
 
+    <img src="@url"
+         class="@cssClass"
+         alt="Avatar" />
+}

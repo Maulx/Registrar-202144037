@@ -111,6 +111,7 @@
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\NextSessionController.cs" />
     <Compile Include="Controllers\NotificationsController.cs" />
     <Compile Include="Controllers\StudentsController.cs" />
     <Compile Include="Controllers\TeachersController.cs" />
@@ -171,6 +172,7 @@
     <Content Include="Content\popup.css" />
     <Content Include="Content\Selections.css" />
     <Content Include="Content\site.css" />
+    <Content Include="Content\Students.css" />
     <Content Include="Content\UI-Images\Abort.png" />
     <Content Include="Content\UI-Images\Accept.png" />
     <Content Include="Content\UI-Images\admin.png" />
@@ -265,6 +267,7 @@
     <Content Include="Views\Courses\GetCourses.cshtml" />
     <Content Include="Views\Courses\Details.cshtml" />
     <Content Include="Views\Courses\List.cshtml" />
+    <Content Include="Views\NextSession\Edit.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
