@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "Profs";
+    ViewBag.PageTitle = "Profs";
+    bool search = Session["Search"] != null && (bool)Session["Search"];
+    string searchString = Session["SearchString"] != null ? (string)Session["SearchString"] : "";
+}
+@if (search) {
+    <div class="searchBar registrarSearch">
+        <input type="text" id="searchInput" class="section roundedBorder searchBarItem" value="@searchString" placeholder="Recherche..." />
+        
+    </div>
+}
+<div id="teachersContainer"></div>
+<div class="section roundedBorder currentSession">Session courante : <b>@Models.NextSession.ShortCaption</b></div>
+@section Scripts {
+<script>
+    let panel;
+    $(() => {
+        panel = new AutoRefreshedPanel("teachersContainer", "/Teachers/GetTeachers", 5, RestoreDetailsState);
+        $("#searchInput").on("change", function () { window.location = "/Teachers/SetSearchString?value=" + encodeURIComponent($(this).val()); });
+        
+    });
+</script>
+}

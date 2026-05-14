@@ -9,18 +9,24 @@
     string searchString = Session["SearchString"] != null ? (string)Session["SearchString"] : "";
 
     int currentStudentId = Session["CurrentStudentId"] != null ? (int)Session["CurrentStudentId"] : 0;
+    int currentCourseId = Session["CurrentCourseId"] != null ? (int)Session["CurrentCourseId"] : 0;
+    int currentTeacherId = Session["CurrentTeacherId"] != null ? (int)Session["CurrentTeacherId"] : 0;
 
 
     bool userConnected = Models.User.ConnectedUser != null;
     bool userIsAdmin = userConnected ? Models.User.ConnectedUser.IsAdmin : false;
     bool userCanWrite = userConnected ? Models.User.ConnectedUser.CanWrite : false;
     string index = RouteConfig.DefaultAction();
+    string activeStudents = controller == "students" ? "active" : "";
+    string activeCourses = controller == "courses" ? "active" : "";
+    string activeTeachers = controller == "teachers" ? "active" : "";
 }
 
 <div class="section roundedBorder">
     <div class="headerMenu">
         <i class="siteIcon"></i>
         <div class="pageTitle"> @ViewBag.PageTitle </div>
+        @if (userConnected) { <a class="navLink @activeStudents" href="/Students/List">Étudiants</a><a class="navLink @activeCourses" href="/Courses/List">Cours</a><a class="navLink @activeTeachers" href="/Teachers/List">Profs</a> }
         <!-- Direct action context command icons -->
         @switch (action)
         {
@@ -125,7 +131,8 @@
             case "edit":
                 <div id="mainMenuPanel" class="menu">
                     <i class="cmdIcon submitCmd fa fa-circle-check" title="Soumettre" onclick="document.getElementById('submit').click()"></i>
-                    <a href="/@controller/Details/@currentStudentId" class="cmdIcon fa fa-square-xmark" title="Annuler"></a>
+                    @{ int currentId = controller == "courses" ? currentCourseId : (controller == "teachers" ? currentTeacherId : currentStudentId); }
+                    <a href="/@controller/Details/@currentId" class="cmdIcon fa fa-square-xmark" title="Annuler"></a>
                 </div>
                 break;
             case "loginsjournal":
