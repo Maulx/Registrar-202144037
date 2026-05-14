@@ -13,55 +13,207 @@ namespace Controllers
     {
         private void InitSessionVariables()
         {
-            if (Session["CurrentStudentId"] == null) Session["CurrentStudentId"] = 0;
-            if (Session["Search"] == null) Session["Search"] = false;
-            if (Session["SearchString"] == null) Session["SearchString"] = "";
-            if (Session["SelectedStudentYear"] == null) Session["SelectedStudentYear"] = 0;
-            Session["StudentsYearsList"] = DB.Students.StudentsYearsList();
+            if (Session["CurrentStudentId"] == null)
+                Session["CurrentStudentId"] = 0;
+
+            if (Session["Search"] == null)
+                Session["Search"] = false;
+
+            if (Session["SearchString"] == null)
+                Session["SearchString"] = "";
+
+            if (Session["SelectedStudentYear"] == null)
+                Session["SelectedStudentYear"] = 0;
+
+            Session["StudentsYearsList"] =
+                DB.Students.StudentsYearsList();
         }
-        public ActionResult Index() => RedirectToAction("List");
-        public ActionResult List(){ InitSessionVariables(); Session["CurrentStudentId"] = 0; return View(); }
-        public ActionResult ToggleSearch(){ InitSessionVariables(); Session["Search"] = !(bool)Session["Search"]; return RedirectToAction("List"); }
-        public ActionResult SetSearchString(string value){ InitSessionVariables(); Session["SearchString"] = value != null ? value.ToLower() : ""; return RedirectToAction("List"); }
-        public ActionResult SetSearchYear(int value){ InitSessionVariables(); Session["SelectedStudentYear"] = value; return RedirectToAction("List"); }
+
+        public ActionResult Index()
+        {
+            return RedirectToAction("List");
+        }
+
+        public ActionResult List()
+        {
+            InitSessionVariables();
+
+            Session["CurrentStudentId"] = 0;
+
+            return View();
+        }
+
+        public ActionResult ToggleSearch()
+        {
+            InitSessionVariables();
+
+            Session["Search"] =
+                !(bool)Session["Search"];
+
+            return RedirectToAction("List");
+        }
+
+        public ActionResult SetSearchString(string value)
+        {
+            InitSessionVariables();
+
+            Session["SearchString"] =
+                value != null ? value.ToLower() : "";
+
+            return RedirectToAction("List");
+        }
+
+        public ActionResult SetSearchYear(int value)
+        {
+            InitSessionVariables();
+
+            Session["SelectedStudentYear"] = value;
+
+            return RedirectToAction("List");
+        }
+
         public ActionResult GetStudents(bool forceRefresh = false)
         {
             InitSessionVariables();
-            IEnumerable<Student> result = DB.Students.ToList();
+
+            IEnumerable<Student> result =
+                DB.Students.ToList();
+
             if ((bool)Session["Search"])
             {
-                string q = (string)Session["SearchString"];
-                int year = (int)Session["SelectedStudentYear"];
-                if (!string.IsNullOrWhiteSpace(q)) result = result.Where(s => s.Code.ToLower().Contains(q) || s.FirstName.ToLower().Contains(q) || s.LastName.ToLower().Contains(q));
-                if (year != 0) result = result.Where(s => s.Year == year);
+                string q =
+                    (string)Session["SearchString"];
+
+                int year =
+                    (int)Session["SelectedStudentYear"];
+
+                if (!string.IsNullOrWhiteSpace(q))
+                {
+                    result = result.Where(s =>
+                        s.Code.ToLower().Contains(q) ||
+                        s.FirstName.ToLower().Contains(q) ||
+                        s.LastName.ToLower().Contains(q));
+                }
+
+                if (year != 0)
+                {
+                    result = result.Where(s =>
+                        s.Year == year);
+                }
             }
-            return PartialView(result.OrderByDescending(s => s.Year).ThenBy(s => s.LastName).ThenBy(s => s.FirstName));
+
+            return PartialView(
+                result
+                    .OrderByDescending(s => s.Year)
+                    .ThenBy(s => s.LastName)
+                    .ThenBy(s => s.FirstName)
+            );
         }
-        public ActionResult Details(int id){ InitSessionVariables(); Session["CurrentStudentId"] = id; Student student = DB.Students.Get(id); return student != null ? View(student) : (ActionResult)RedirectToAction("List"); }
-        [UserAccess(Access.Write)] public ActionResult Create()
+
+        public ActionResult Details(int id)
         {
-            ViewBag.Creating = true; ViewBag.Session = NextSession.Caption;
-            return View("StudentForm", new Student { Code = DB.Students.GenerateUniqueCode(), BirthDate = DateTime.Today });
+            InitSessionVariables();
+
+            Session["CurrentStudentId"] = id;
+
+            Student student = DB.Students.Get(id);
+
+            return student != null
+                ? View(student)
+                : (ActionResult)RedirectToAction("List");
         }
-        [HttpPost][UserAccess(Access.Write)] public ActionResult Create(Student student)
+
+        [UserAccess(Access.Write)]
+        public ActionResult Create()
         {
-            student.Code = DB.Students.GenerateUniqueCode(); DB.Students.Add(student); return RedirectToAction("Details", new { id = student.Id });
+            ViewBag.Creating = true;
+            ViewBag.Session = NextSession.Caption;
+
+            return View(
+                "StudentForm",
+                new Student
+                {
+                    Code = DB.Students.GenerateUniqueCode(),
+                    BirthDate = DateTime.Today
+                }
+            );
         }
-        [UserAccess(Access.Write)] public ActionResult Edit(int? id)
+
+        [HttpPost]
+        [UserAccess(Access.Write)]
+        public ActionResult Create(Student student)
         {
-            int currentId = id ?? (int)Session["CurrentStudentId"]; Session["CurrentStudentId"] = currentId;
-            Student student = DB.Students.Get(currentId); if (student == null) return RedirectToAction("List");
-            ViewBag.Creating = false; ViewBag.Session = NextSession.Caption; ViewBag.Registrations = student.NextSessionCoursesToSelectList; ViewBag.Courses = DB.Courses.NextSessionToSelectList;
+            student.Code =
+                DB.Students.GenerateUniqueCode();
+
+            DB.Students.Add(student);
+
+            return RedirectToAction(
+                "Details",
+                new { id = student.Id }
+            );
+        }
+
+        [UserAccess(Access.Write)]
+        public ActionResult Edit(int? id)
+        {
+            int currentId =
+                id ?? (int)Session["CurrentStudentId"];
+
+            Session["CurrentStudentId"] = currentId;
+
+            Student student =
+                DB.Students.Get(currentId);
+
+            if (student == null)
+                return RedirectToAction("List");
+
+            ViewBag.Creating = false;
+            ViewBag.Session = NextSession.Caption;
+
+            ViewBag.Registrations =
+                student.NextSessionCoursesToSelectList;
+
+            ViewBag.Courses =
+                DB.Courses.NextSessionToSelectList;
+
             return View("StudentForm", student);
         }
-        [HttpPost][UserAccess(Access.Write)] public ActionResult Edit(Student student, List<int> selectedCoursesId)
+
+        [HttpPost]
+        [UserAccess(Access.Write)]
+        public ActionResult Edit(
+            Student student,
+            List<int> selectedCoursesId)
         {
-            Student old = DB.Students.Get(student.Id); if (old == null) return RedirectToAction("List");
-            student.Code = old.Code; DB.Students.Update(student, selectedCoursesId); return RedirectToAction("Details", new { id = student.Id });
+            Student old =
+                DB.Students.Get(student.Id);
+
+            if (old == null)
+                return RedirectToAction("List");
+
+            student.Code = old.Code;
+
+            DB.Students.Update(
+                student,
+                selectedCoursesId
+            );
+
+            return RedirectToAction(
+                "Details",
+                new { id = student.Id }
+            );
         }
-        [UserAccess(Access.Write)] public ActionResult Delete(int? id)
+
+        [UserAccess(Access.Write)]
+        public ActionResult Delete(int? id)
         {
-            int currentId = id ?? (int)Session["CurrentStudentId"]; DB.Students.Delete(currentId); return RedirectToAction("List");
+            int currentId =
+                id ?? (int)Session["CurrentStudentId"];
+
+            DB.Students.Delete(currentId);
+
+            return RedirectToAction("List");
         }
     }
 }

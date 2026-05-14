@@ -26,7 +26,8 @@
     <div class="headerMenu">
         <i class="siteIcon"></i>
         <div class="pageTitle"> @ViewBag.PageTitle </div>
-        @if (userConnected) { <a class="navLink @activeStudents" href="/Students/List">Étudiants</a><a class="navLink @activeCourses" href="/Courses/List">Cours</a><a class="navLink @activeTeachers" href="/Teachers/List">Profs</a> }
+        @if (userConnected)
+        {<a class="navLink @activeStudents" href="/Students/List">Étudiants</a><a class="navLink @activeCourses" href="/Courses/List">Cours</a><a class="navLink @activeTeachers" href="/Teachers/List">Profs</a>}
         <!-- Direct action context command icons -->
         @switch (action)
         {

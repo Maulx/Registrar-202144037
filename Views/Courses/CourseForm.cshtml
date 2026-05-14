@@ -1,16 +1,18 @@
 ﻿@model Models.Course
 @{ ViewBag.Title = ViewBag.Creating ? "Cours - Ajout" : "Cours - Modification"; ViewBag.PageTitle = ViewBag.Title; bool creating = ViewBag.Creating; }
-@using (Html.BeginForm()) {
-    @Html.HiddenFor(m=>m.Id)
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.Id)
     <details id="course_form_details_infos" open>
         <summary>Informations - [@Model.Code]</summary>
         <fieldset>
-            <label>Session</label>@Html.TextBoxFor(m=>m.Session, new {@class="form-control", type="number", min="1", max="6"})
-            <label>Sigle</label>@Html.TextBoxFor(m=>m.Code, new {@class="form-control"})
-            <label>Titre</label>@Html.TextBoxFor(m=>m.Title, new {@class="form-control"})
+            <label>Session</label>@Html.TextBoxFor(m => m.Session, new { @class = "form-control", type = "number", min = "1", max = "6" })
+            <label>Sigle</label>@Html.TextBoxFor(m => m.Code, new { @class = "form-control" })
+            <label>Titre</label>@Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
         </fieldset>
     </details>
-    if (!creating) {
+    if (!creating)
+    {
         <details id="course_form_details_students" open>
             <summary>Inscriptions : @Models.NextSession.Caption</summary>
             @Helper.SelectionLists("selectedStudentsId", (SelectList)ViewBag.Students, (SelectList)ViewBag.AllStudents)
