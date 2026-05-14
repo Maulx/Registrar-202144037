@@ -18,7 +18,6 @@
         $(() => {
             panel = new AutoRefreshedPanel("teachersContainer", "/Teachers/GetTeachers", 5, RestoreDetailsState);
             $("#searchInput").on("change", function () { window.location = "/Teachers/SetSearchString?value=" + encodeURIComponent($(this).val()); });
-
         });
     </script>
 }

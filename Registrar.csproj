@@ -173,6 +173,7 @@
     <Content Include="Content\Selections.css" />
     <Content Include="Content\site.css" />
     <Content Include="Content\Students.css" />
+    <Content Include="Content\Session.css" />
     <Content Include="Content\UI-Images\Abort.png" />
     <Content Include="Content\UI-Images\Accept.png" />
     <Content Include="Content\UI-Images\admin.png" />

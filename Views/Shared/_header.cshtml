@@ -27,7 +27,10 @@
         <i class="siteIcon"></i>
         <div class="pageTitle"> @ViewBag.PageTitle </div>
         @if (userConnected)
-        {<a class="navLink @activeStudents" href="/Students/List">Étudiants</a><a class="navLink @activeCourses" href="/Courses/List">Cours</a><a class="navLink @activeTeachers" href="/Teachers/List">Profs</a>}
+        {
+            <a class="navLink @activeStudents" href="/Students/List">Étudiants</a>
+            <a class="navLink @activeCourses" href="/Courses/List">Cours</a>
+            <a class="navLink @activeTeachers" href="/Teachers/List">Profs</a>}
         <!-- Direct action context command icons -->
         @switch (action)
         {
@@ -110,10 +113,17 @@
                     </div>
                     @if (userCanWrite)
                     {
+                        int currentDetailsId = controller == "courses" ? currentCourseId : (controller == "teachers" ? currentTeacherId : currentStudentId);
+
                         <a href="/@controller/Edit" class="cmdIcon fa fa-pen-to-square" title="Modifier..."></a>
+
                         <i class="cmdIcon fa fa-trash-can"
                            title="Effacer"
-                           onclick="bootbox.confirm(function(result){ if (result) window.location = '/@controller/Delete'; })">
+                           onclick="bootbox.confirm('Supprimer cet élément ?', function(result)
+                           {
+                            if (result)
+                                window.location = '/@controller/Delete/@currentDetailsId';
+                           })">
                         </i>
                     }
 

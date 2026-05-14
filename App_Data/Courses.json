@@ -1,145 +1,146 @@
 [
   {
-    "Id": 1,
     "Code": "201-KB1-LG",
     "Title": "Mathématiques pour l'informatique",
-    "Session": 1
+    "Session": 1,
+    "Id": 1
   },
   {
-    "Id": 2,
     "Code": "420-KB1-LG",
     "Title": "Introduction à la programmation",
-    "Session": 1
+    "Session": 1,
+    "Id": 2
   },
   {
-    "Id": 3,
     "Code": "420-KB2-LG",
     "Title": "Conception d'interfaces Web",
-    "Session": 1
+    "Session": 1,
+    "Id": 3
   },
   {
-    "Id": 4,
     "Code": "420-KB3-LG",
     "Title": "Exploitation d'une station de travail",
-    "Session": 1
+    "Session": 1,
+    "Id": 4
   },
-
   {
-    "Id": 5,
     "Code": "420-KB4-LG",
     "Title": "Programmation orientée objet",
-    "Session": 2
+    "Session": 2,
+    "Id": 5
   },
   {
-    "Id": 6,
     "Code": "420-KB5-LG",
     "Title": "Programmation Web",
-    "Session": 2
+    "Session": 2,
+    "Id": 6
   },
   {
-    "Id": 7,
     "Code": "420-KB6-LG",
     "Title": "Introduction aux bases de données",
-    "Session": 2
+    "Session": 2,
+    "Id": 7
   },
   {
-    "Id": 8,
     "Code": "420-KB7-LG",
     "Title": "Réseaux informatiques",
-    "Session": 2
+    "Session": 2,
+    "Id": 8
   },
   {
-    "Id": 9,
     "Code": "420-KJ1-LG",
     "Title": "Développement de jeux vidéos",
-    "Session": 2
+    "Session": 2,
+    "Id": 9
   },
-
   {
-    "Id": 10,
     "Code": "420-KB8-LG",
     "Title": "Programmation d'applications mobiles",
-    "Session": 3
+    "Session": 3,
+    "Id": 10
   },
   {
-    "Id": 11,
     "Code": "420-KB9-LG",
     "Title": "Programmation des bases de données",
-    "Session": 3
+    "Session": 3,
+    "Id": 11
   },
   {
-    "Id": 12,
     "Code": "420-KBA-LG",
     "Title": "Programmation orientée objet avancée",
-    "Session": 3
+    "Session": 3,
+    "Id": 12
   },
-
   {
-    "Id": 13,
     "Code": "420-KBE-LG",
     "Title": "Projet dirigé",
-    "Session": 4
+    "Session": 4,
+    "Id": 13
   },
   {
-    "Id": 14,
     "Code": "420-KBC-LG",
     "Title": "Développement d'applications mobiles",
-    "Session": 4
+    "Session": 4,
+    "Id": 14
   },
   {
-    "Id": 15,
     "Code": "420-KBD-LG",
     "Title": "Développement d'applications Web 2",
-    "Session": 4
+    "Session": 4,
+    "Id": 15
   },
   {
-    "Id": 16,
     "Code": "420-KBG-LG",
     "Title": "Développement de services d'échanges de données",
-    "Session": 5
+    "Session": 5,
+    "Id": 16
   },
   {
-    "Id": 17,
     "Code": "420-KBZ-LG",
     "Title": "Conception de jeux vidéo",
-    "Session": 5
+    "Session": 5,
+    "Id": 17
   },
   {
-    "Id": 18,
     "Code": "420-KBF-LG",
     "Title": "Professions de l'informatique",
-    "Session": 5
+    "Session": 5,
+    "Id": 18
   },
-
   {
-    "Id": 19,
     "Code": "420-KBH-LG",
     "Title": "Projet d'intégration",
-    "Session": 5
+    "Session": 5,
+    "Id": 19
   },
   {
-    "Id": 20,
     "Code": "420-KBJ-LG",
     "Title": "Développement d'application Web avancé",
-    "Session": 5
+    "Session": 5,
+    "Id": 20
   },
   {
-    "Id": 21,
     "Code": "420-KBK-LG",
     "Title": "Veille technologique",
-    "Session": 6
+    "Session": 6,
+    "Id": 21
   },
-
   {
-    "Id": 22,
     "Code": "350-KB1-LG",
     "Title": "Interaction dans le monde professionnel",
-    "Session": 6
+    "Session": 6,
+    "Id": 22
   },
   {
-    "Id": 23,
     "Code": "420-KBL-LG",
     "Title": "Stage en informatique",
-    "Session": 6
+    "Session": 6,
+    "Id": 23
+  },
+  {
+    "Code": "201-TEST-LG",
+    "Title": "tst",
+    "Session": 3,
+    "Id": 24
   }
 ]

@@ -21,9 +21,10 @@
     .Distinct()
     .OrderByDescending(y => y))
 {
-    var teacher = Model.Allocations
-        .FirstOrDefault(a => a.Year == year)
-        .Teacher;
+    var allocation = Model.Allocations
+    .FirstOrDefault(a => a.Year == year);
+
+    var teacher = allocation != null ? allocation.Teacher : null;
 
     <details id="course_registrations_details_@year" open>
         <summary>

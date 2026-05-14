@@ -1,0 +1,29 @@
+﻿
+.currentSession {
+    color: black;
+    text-decoration: none;
+}
+.nextSessionForm {
+    width: 100% !important;
+    max-width: none !important;
+}
+
+    .nextSessionForm > * {
+        width: 100% !important;
+        max-width: none !important;
+    }
+
+    .nextSessionForm hr {
+        width: 100% !important;
+    }
+
+    .nextSessionForm fieldset {
+        width: 100% !important;
+        max-width: none !important;
+        box-sizing: border-box;
+    }
+
+    .nextSessionForm .form-control {
+        width: 100% !important;
+        max-width: none !important;
+    }
