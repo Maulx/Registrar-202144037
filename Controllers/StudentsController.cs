@@ -1,93 +1,135 @@
-﻿using System;
+﻿using DAL;
+using Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using static Controllers.AccessControl;
 
-namespace Registrar.Controllers
+namespace Controllers
 {
+    [UserAccess(Models.Access.View)]
     public class StudentsController : Controller
     {
+        private void InitSessionVariables()
+        {
+            if (Session["CurrentStudentId"] == null) Session["CurrentStudentId"] = 0;
+            if (Session["Search"] == null) Session["Search"] = false;
+            if (Session["SearchString"] == null) Session["SearchString"] = "";
+            if (Session["SelectedStudentYear"] == null) Session["SelectedStudentYear"] = 0;
+
+            Session["StudentsYearsList"] = DB.Students.StudentsYearsList();
+        }
+
+        private void ResetCurrentStudentInfo()
+        {
+            Session["CurrentStudentId"] = 0;
+        }
+
         public ActionResult List()
         {
-            return View();
-        }
-        // GET: Students
-        public ActionResult Index()
-        {
+            InitSessionVariables();
+            ResetCurrentStudentInfo();
             return View();
         }
 
-        // GET: Students/Details/5
+        public ActionResult ToggleSearch()
+        {
+            InitSessionVariables();
+            Session["Search"] = !(bool)Session["Search"];
+            return RedirectToAction("List");
+        }
+
+        public ActionResult SetSearchString(string value)
+        {
+            InitSessionVariables();
+            Session["SearchString"] = value != null ? value.ToLower() : "";
+            return RedirectToAction("List");
+        }
+
+        public ActionResult SetSearchYear(int value)
+        {
+            InitSessionVariables();
+            Session["SelectedStudentYear"] = value;
+            return RedirectToAction("List");
+        }
+
+        public ActionResult GetStudents(bool forceRefresh = false)
+        {
+            try
+            {
+                InitSessionVariables();
+
+                IEnumerable<Student> result = DB.Students.ToList();
+
+                bool search = (bool)Session["Search"];
+                string searchString = (string)Session["SearchString"];
+                int selectedYear = (int)Session["SelectedStudentYear"];
+
+                if (search)
+                {
+                    if (!string.IsNullOrWhiteSpace(searchString))
+                    {
+                        result = result.Where(s =>
+                            s.Code.ToLower().Contains(searchString) ||
+                            s.FirstName.ToLower().Contains(searchString) ||
+                            s.LastName.ToLower().Contains(searchString));
+                    }
+
+                    if (selectedYear != 0)
+                    {
+                        result = result.Where(s => s.Year == selectedYear);
+                    }
+                }
+
+                result = result.OrderByDescending(s => s.Year)
+                               .ThenBy(s => s.LastName)
+                               .ThenBy(s => s.FirstName);
+
+                return PartialView(result);
+            }
+            catch (Exception ex)
+            {
+                return Content("Erreur interne : " + ex.Message, "text/html");
+            }
+        }
+
         public ActionResult Details(int id)
         {
-            return View();
-        }
+            Session["CurrentStudentId"] = id;
 
-        // GET: Students/Create
-        public ActionResult Create()
+            Student student = DB.Students.Get(id);
+
+            if (student != null)
+                return View(student);
+
+            return RedirectToAction("List");
+        }
+        [UserAccess(Access.Admin)]
+        public ActionResult Edit()
         {
-            return View();
+            int id = (int)Session["id"];
+            Student student = DB.Students.Get(id);
+            if (student != null)
+            {
+                ViewBag.Registrations = student.NextSessionCoursesToSelectList;
+                ViewBag.Courses = DB.Courses.NextSessionToSelectList;
+                return View(DB.Students.Get(id));
+            }
+            return RedirectToAction("Index");
         }
-
-        // POST: Students/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        [UserAccess(Access.Admin)]
+        public ActionResult Edit(Student student, List<int> selectedCoursesId)
         {
-            try
+            if (student.IsValid ())
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                student.Id = (int)Session["id"];
+                student.Code = (string)Session["code"];
+                DB.Students.Update(student, selectedCoursesId);
+                return RedirectToAction("Details", new { id = student.Id });
             }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Students/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Students/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Students/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Students/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return Redirect("/Accounts/Login?message=Accès illégal! &success=false");
         }
     }
 }

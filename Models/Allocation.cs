@@ -10,6 +10,10 @@ namespace Wikimedia.Models
 {
     public class Allocation : Record
     {
+        public Allocation()
+        {
+            Year = NextSession.Year;
+        }
         public int TeacherId { get; set; }
         public int CourseId { get; set; }
         public int Year { get; set; }
@@ -18,5 +22,7 @@ namespace Wikimedia.Models
         public Teacher Teacher => DB.Teachers.Get(TeacherId);
         [JsonIgnore]
         public Course Course => DB.Courses.Get(CourseId);
+        [JsonIgnore]
+        public bool IsNextSession => Year == NextSession.Year && NextSession.ValidSessions.Contains(Course.Session);
     }
 }

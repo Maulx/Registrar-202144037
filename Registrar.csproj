@@ -126,6 +126,7 @@
     </Compile>
     <Compile Include="Models\Allocation.cs" />
     <Compile Include="Models\AllocationsRepository.cs" />
+    <Compile Include="Models\SelectListUtilities.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\CoursesRepository.cs" />
     <Compile Include="Models\EmailView.cs" />
@@ -175,6 +176,7 @@
     <Content Include="Content\_layout.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Compile Include="Models\NextSession.cs" />
     <Content Include="Scripts\autoRefreshPanel.js" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\image-control.js" />
@@ -246,6 +248,7 @@
     <Content Include="Views\Students\List.cshtml" />
     <Content Include="Views\Students\Details.cshtml" />
     <Content Include="Views\Students\GetStudents.cshtml" />
+    <Content Include="Views\Students\StudentForm.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
