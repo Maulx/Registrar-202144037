@@ -7,8 +7,8 @@
         <summary>Informations - [@Model.Code]</summary>
         <fieldset>
             <label>Session</label>@Html.TextBoxFor(m => m.Session, new { @class = "form-control", type = "number", min = "1", max = "6" })
-            <label>Sigle</label>@Html.TextBoxFor(m => m.Code, new { @class = "form-control" })
-            <label>Titre</label>@Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+            <label>Sigle</label>@Html.TextBoxFor(m => m.Code, new { @class = "form-control" , @required = true})
+            <label>Titre</label>@Html.TextBoxFor(m => m.Title, new { @class = "form-control", @required = true })
         </fieldset>
     </details>
     if (!creating)
