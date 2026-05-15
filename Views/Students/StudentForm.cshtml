@@ -1,23 +1,84 @@
 ﻿@model Models.Student
-@{ ViewBag.Title = ViewBag.Creating ? "Étudiant - Ajout" : "Étudiant - Modification"; ViewBag.PageTitle = ViewBag.Title; bool creating = ViewBag.Creating; string session = ViewBag.Session; }
-@using (Html.BeginForm()) {
-    @Html.HiddenFor(m=>m.Id)
-    @Html.HiddenFor(m=>m.Code)
+
+@{
+    ViewBag.Title = ViewBag.Creating ? "Étudiant - Ajout" : "Étudiant - Modification";
+    ViewBag.PageTitle = ViewBag.Title;
+
+    bool creating = ViewBag.Creating;
+    string session = ViewBag.Session;
+}
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.Code)
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
     <details id="student_form_details_infos" open>
         <summary>Informations - [@Model.Code]</summary>
+
         <fieldset>
-            <label>Prénom</label>@Html.TextBoxFor(m=>m.FirstName, new {@class="form-control"})
-            <label>Nom</label>@Html.TextBoxFor(m=>m.LastName, new {@class="form-control"})
-            <label>Date de naissance</label>@Html.TextBoxFor(m=>m.BirthDate, "{0:yyyy-MM-dd}", new {@class="form-control", type="date"})
-            <label>Courriel</label>@Html.TextBoxFor(m=>m.Email, new {@class="form-control", type="email"})
-            <label>Téléphone</label>@Html.TextBoxFor(m=>m.Phone, new {@class="form-control"})
+            <label>Prénom</label>
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", required = "required" })
+            @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+
+            <label>Nom</label>
+            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", required = "required" })
+            @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+
+            <label>Date de naissance</label>
+            @Html.TextBoxFor(m => m.BirthDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date", required = "required" })
+            @Html.ValidationMessageFor(m => m.BirthDate, "", new { @class = "text-danger" })
+
+            <label>Courriel</label>
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email", required = "required" })
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+
+            <label>Téléphone</label>
+            @Html.TextBoxFor(m => m.Phone, new
+            {
+                @class = "form-control",
+                id = "Phone",
+                placeholder = "(450) 555-1234",
+                maxlength = "14",
+                required = "required",
+                pattern = @"\([0-9]{3}\) [0-9]{3}-[0-9]{4}"
+            })
+            @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "text-danger" })
         </fieldset>
     </details>
-    if (!creating) {
+
+    if (!creating)
+    {
         <details id="student_form_details_courses" open>
             <summary>Inscriptions : @session</summary>
             @Helper.SelectionLists("selectedCoursesId", (SelectList)ViewBag.Registrations, (SelectList)ViewBag.Courses)
         </details>
     }
+
     <input type="submit" id="submit" hidden />
 }
+
+<script>
+    $("#Phone").on("input", function () {
+        let value = $(this).val().replace(/\D/g, "");
+
+        if (value.length > 10)
+            value = value.substring(0, 10);
+
+        let formatted = value;
+
+        if (value.length > 3) {
+            formatted = "(" + value.substring(0, 3) + ") " + value.substring(3);
+        }
+
+        if (value.length > 6) {
+            formatted = "(" + value.substring(0, 3) + ") " +
+                value.substring(3, 6) + "-" +
+                value.substring(6);
+        }
+
+        $(this).val(formatted);
+    });
+</script>

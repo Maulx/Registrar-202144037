@@ -143,6 +143,14 @@ namespace Controllers
         [UserAccess(Access.Write)]
         public ActionResult Create(Student student)
         {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Creating = true;
+                ViewBag.Session = NextSession.Caption;
+
+                return View("StudentForm", student);
+            }
+
             student.Code =
                 DB.Students.GenerateUniqueCode();
 

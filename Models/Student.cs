@@ -5,16 +5,28 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using Models;
 using System.Linq;
+using System.ComponentModel.DataAnnotations;
 
 namespace Models
 {
     public class Student : Record
     {
-        public string FirstName {  get; set; }
+        [Required(ErrorMessage = "Le prénom est obligatoire")]
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "Le nom est obligatoire")]
         public string LastName { get; set; }
+
         public string Code { get; set; }
+
+        [Required(ErrorMessage = "La date de naissance est obligatoire")]
         public DateTime BirthDate { get; set; }
+
+        [Required(ErrorMessage = "Le courriel est obligatoire")]
+        [EmailAddress(ErrorMessage = "Courriel invalide")]
         public string Email { get; set; }
+        [Required(ErrorMessage = "Le téléphone est obligatoire")]
+        [RegularExpression(@"^(\(\d{3}\)\s?\d{3}-\d{4}|\d{3}-\d{3}-\d{4})$", ErrorMessage = "Format valide : (450) 555-1234 ou 450-555-1234")]
         public string Phone { get; set; }
 
         [JsonIgnore] public string FullName => LastName + " " + FirstName;

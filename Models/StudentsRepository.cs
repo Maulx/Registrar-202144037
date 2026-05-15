@@ -12,7 +12,7 @@ namespace Models
         public string GenerateUniqueCode()
         {
             string code;
-            do { code = DateTime.Now.Year.ToString() + rnd.Next(100000, 999999).ToString(); }
+            do { code = NextSession.Year.ToString() + rnd.Next(100000, 999999).ToString(); }
             while (ToList().Any(s => s.Code == code));
             return code;
         }
