@@ -34,6 +34,7 @@
         <!-- Direct action context command icons -->
         @switch (action)
         {
+
             case "login": break;
             case "subscribe":
                 <div id="mainMenuPanel" class="menu">
@@ -142,8 +143,16 @@
             case "edit":
                 <div id="mainMenuPanel" class="menu">
                     <i class="cmdIcon submitCmd fa fa-circle-check" title="Soumettre" onclick="document.getElementById('submit').click()"></i>
-                    @{ int currentId = controller == "courses" ? currentCourseId : (controller == "teachers" ? currentTeacherId : currentStudentId); }
-                    <a href="/@controller/Details/@currentId" class="cmdIcon fa fa-square-xmark" title="Annuler"></a>
+                    @if (controller != "courses" && controller != "teachers" && controller != "students")
+                    {
+                        <a href="/Students/List/" class="cmdIcon fa fa-square-xmark" title="Annuler"></a>
+                    }
+                    else
+                    {
+                        int currentId = controller == "courses" ? currentCourseId : (controller == "teachers" ? currentTeacherId : currentStudentId);
+                        <a href="/@controller/Details/@currentId" class="cmdIcon fa fa-square-xmark" title="Annuler"></a>
+                    }
+
                 </div>
                 break;
             case "loginsjournal":
@@ -158,24 +167,5 @@
 
     </div>
 </div>
-@if (search && controller == "medias" && action == "list")
-{
-    <div class="searchBar">
-        <input type="search" id="searchInput" class="section roundedBorder searchBarItem" value="@searchString" placeholder="Recherche...">
-        <div id="categorySelectPanel" class="searchBarItem">
-            <!-- Dynamically refreshed -->
-            @{
-                Html.RenderPartial("GetMediasCategoriesList");
-            }
-
-        </div>
-        <div id="ownerSelectPanel" class="searchBarItem">
-            <!-- Dynamically refreshed -->
-            @{
-                Html.RenderPartial("GetMediasOwnersList");
-            }
-        </div>
-    </div>
-}
 
 
