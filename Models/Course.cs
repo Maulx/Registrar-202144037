@@ -36,7 +36,7 @@ namespace Models
         }
         public void UpdateRegistrations(List<int> selectedStudentsId)
         {
-            DeleteAllRegistrations();
+            DeleteNextSessionRegistrations();
             if (selectedStudentsId != null)
                 foreach (int studentId in selectedStudentsId)
                     DB.Registrations.Add(new Registration { StudentId = studentId, CourseId = Id });
