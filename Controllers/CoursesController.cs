@@ -91,7 +91,16 @@ namespace Controllers
                 ? View(course)
                 : (ActionResult)RedirectToAction("List");
         }
+        public ActionResult GetCourseDetails()
+        {
+            int id =
+                (int)Session["CurrentCourseId"];
 
+            Course course =
+                DB.Courses.Get(id);
+
+            return PartialView(course);
+        }
         [UserAccess(Access.Write)]
         public ActionResult Create()
         {

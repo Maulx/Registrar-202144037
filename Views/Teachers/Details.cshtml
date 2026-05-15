@@ -1,36 +1,26 @@
 ﻿@model Models.Teacher
-@{ ViewBag.Title = "Prof - Détails"; ViewBag.PageTitle = "Prof - Détails"; }
-<details id="teacher_details_infos" open>
-    <summary>@Model.FullName</summary>
-    <div class="detailsPanel">
-        <p>
-            <i class="fa fa-barcode"></i> @Model.Code
-        </p>
-        <p>
-            <i class="fa fa-phone"></i> @Model.Phone
-        </p>
-        <p>
-            <i class="fa fa-paper-plane"></i> @Model.Email
-        </p>
-        <p>Embauché le @Model.StartDate.ToString("d MMMM yyyy")</p>
-            @Helper.Avatar(Model.Avatar, "teacherAvatar")
 
-        
-    </div>
-</details>
-<h4>Allocations</h4>
-@foreach (var year in Model.Allocations.Select(a => a.Year).Distinct().OrderByDescending(y => y))
-{
-    <details id="teacher_allocations_details_@year" open>
-        <summary>@year</summary>
-        @foreach (var a in Model.Allocations.Where(a => a.Year == year).OrderBy(a => a.Course.Session).ThenBy(a => a.Course.Code))
-        {
-            <div>
-                <a href="/Courses/Details/@a.CourseId">[@a.Course.Session] @a.Course.Code @a.Course.Title</a>
-            </div>
-        }
-    </details>
+@{
+    ViewBag.Title = "Prof - Détails";
+    ViewBag.PageTitle = "Prof - Détails";
 }
-@section Scripts{
-    <script>$(() => RestoreDetailsState());</script>
+
+<div id="teacherDetailsPanel">
+    @{
+        Html.RenderPartial("GetTeacherDetails", Model);
+    }
+</div>
+
+@section Scripts {
+    <script>
+        function refreshTeacherDetails() {
+            $("#teacherDetailsPanel").load("/Teachers/GetTeacherDetails", function () {
+                RestoreDetailsState();
+            });
+        }
+
+        setInterval(refreshTeacherDetails, 5000);
+
+        $(() => RestoreDetailsState());
+    </script>
 }

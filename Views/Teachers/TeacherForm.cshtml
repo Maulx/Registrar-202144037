@@ -1,21 +1,34 @@
 ﻿@model Models.Teacher
 @{ ViewBag.Title = ViewBag.Creating ? "Prof - Ajout" : "Prof - Modification"; ViewBag.PageTitle = ViewBag.Title; bool creating = ViewBag.Creating; }
-@using (Html.BeginForm()) {
-    @Html.HiddenFor(m=>m.Id)
-    @Html.HiddenFor(m=>m.Code)
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.Code)
     <details id="teacher_form_details_infos" open>
         <summary>Informations - [@Model.Code]</summary>
         <fieldset>
-            <label>Prénom</label>@Html.TextBoxFor(m=>m.FirstName, new {@class="form-control"})
-            <label>Nom</label>@Html.TextBoxFor(m=>m.LastName, new {@class="form-control"})
-            <label>Date d'embauche</label>@Html.TextBoxFor(m=>m.StartDate, "{0:yyyy-MM-dd}", new {@class="form-control", type="date"})
-            <label>Courriel</label>@Html.TextBoxFor(m=>m.Email, new {@class="form-control", type="email"})
-            <label>Téléphone</label>@Html.TextBoxFor(m=>m.Phone, new {@class="form-control"})
-            <label>Avatar</label>@Html.TextBoxFor(m=>m.Avatar, new {@class="form-control"})
-            <img src="@Url.Content(Model.Avatar)" class="teacherAvatar" />
+            <label>Prénom</label>@Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+            <label>Nom</label>@Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+            <label>Date d'embauche</label>@Html.TextBoxFor(m => m.StartDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+            <label>Courriel</label>@Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email" })
+            <label>Téléphone</label>@Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+            <label>Avatar</label>
+
+            <input type="file"
+                   name="avatarFile"
+                   accept="image/png,image/jpeg,image/jpg"
+                   class="form-control" />
+
+            @Html.HiddenFor(m => m.Avatar)
+
+            @if (!string.IsNullOrWhiteSpace(Model.Avatar))
+            {
+                <img src="@Url.Content(Model.Avatar)" class="teacherAvatar" />
+            }
         </fieldset>
     </details>
-    if (!creating) {
+    if (!creating)
+    {
         <details id="teacher_form_details_courses" open>
             <summary>Allocation : @Models.NextSession.Caption</summary>
             @Helper.SelectionLists("selectedCoursesId", (SelectList)ViewBag.Allocations, (SelectList)ViewBag.Courses)

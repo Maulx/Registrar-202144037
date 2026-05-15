@@ -6,46 +6,21 @@
 }
 
 <div id="studentDetailsPanel">
-    <details id="student_details_infos" open>
-        <summary>
-            <i class="fa fa-graduation-cap"></i> @Model.FullName
-        </summary>
-
-        <div class="detailsPanel">
-            <p><i class="fa fa-barcode"></i> @Model.Code</p>
-            <p><i class="fa fa-phone"></i> @Model.Phone</p>
-            <p><i class="fa fa-paper-plane"></i> @Model.Email</p>
-            <p><i class="fa fa-cake-candles"></i> @Model.BirthDate.ToString("d MMMM yyyy")</p>
-        </div>
-    </details>
-
-    <h4>Inscriptions</h4>
-
-    @foreach (var year in Model.Registrations
-        .Select(r => r.Year)
-        .Distinct()
-        .OrderByDescending(y => y))
-    {
-        <details id="student_registrations_details_@year" open>
-            <summary>@year</summary>
-
-            @foreach (var r in Model.Registrations
-                .Where(r => r.Year == year)
-                .OrderBy(r => r.Course.Session)
-                .ThenBy(r => r.Course.Code))
-            {
-                <div>
-                    <a href="/Courses/Details/@r.CourseId">
-                        [@r.Course.Session] @r.Course.Code @r.Course.Title
-                    </a>
-                </div>
-            }
-        </details>
+    @{
+        Html.RenderPartial("GetStudentDetails", Model);
     }
 </div>
 
 @section Scripts {
     <script>
+        function refreshStudentDetails() {
+            $("#studentDetailsPanel").load("/Students/GetStudentDetails", function () {
+                RestoreDetailsState();
+            });
+        }
+
+        setInterval(refreshStudentDetails, 5000);
+
         $(() => RestoreDetailsState());
     </script>
 }

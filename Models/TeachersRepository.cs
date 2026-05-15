@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
+using System.Web;
 
 namespace Models
 {
@@ -18,7 +20,26 @@ namespace Models
         public override bool Delete(int Id)
         {
             Teacher teacher = Get(Id);
-            if (teacher != null) teacher.DeleteAllAllocations();
+
+            if (teacher != null)
+            {
+                teacher.DeleteAllAllocations();
+
+                if (!string.IsNullOrWhiteSpace(teacher.Avatar) &&
+                    teacher.Avatar != "no_avatar.png")
+                {
+                    string path =
+                        System.Web.HttpContext.Current.Server.MapPath(
+                            "~/App_Assets/users/" + teacher.Avatar
+                        );
+
+                    if (System.IO.File.Exists(path))
+                    {
+                        System.IO.File.Delete(path);
+                    }
+                }
+            }
+
             return base.Delete(Id);
         }
         public bool Update(Teacher teacher, List<int> selectedCoursesId)

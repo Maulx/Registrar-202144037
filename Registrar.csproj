@@ -167,7 +167,6 @@
     <Content Include="Content\Icons.css" />
     <Content Include="Content\image-control.css" />
     <Content Include="Content\jqui-custom-datepicker.css" />
-    <Content Include="Content\media.css" />
     <Content Include="Content\menu.css" />
     <Content Include="Content\popup.css" />
     <Content Include="Content\Selections.css" />
@@ -201,6 +200,7 @@
     <Content Include="Scripts\session.js" />
     <Content Include="Scripts\SiteNotificationsHandler.js" />
     <Content Include="Scripts\SiteScripts.js" />
+    <Content Include="Content\Courses.css" />
     <Content Include="Scripts\validation.js" />
     <Content Include="updatingView.gif" />
     <Content Include="Web.config" />
@@ -269,6 +269,9 @@
     <Content Include="Views\Courses\Details.cshtml" />
     <Content Include="Views\Courses\List.cshtml" />
     <Content Include="Views\NextSession\Edit.cshtml" />
+    <Content Include="Views\Students\GetStudentDetails.cshtml" />
+    <Content Include="Views\Courses\GetCourseDetails.cshtml" />
+    <Content Include="Views\Teachers\GetTeacherDetails.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

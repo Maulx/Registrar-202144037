@@ -1,0 +1,40 @@
+﻿@model Models.Teacher
+@if (Model != null)
+{
+    <details id="teacher_details_infos" open>
+        <summary>@Model.FullName</summary>
+        <div class="detailsPanel">
+            <p>
+                <i class="fa fa-barcode"></i> @Model.Code
+            </p>
+            <p>
+                <i class="fa fa-phone"></i> @Model.Phone
+            </p>
+            <p>
+                <i class="fa fa-paper-plane"></i> @Model.Email
+            </p>
+            <p>Embauché le @Model.StartDate.ToString("d MMMM yyyy")</p>
+            <img src="@Url.Content(Model.Avatar)" class="teacherAvatar" />        
+        </div>
+    </details>
+    <h4>Allocations</h4>
+    foreach (var year in Model.Allocations.Select(a => a.Year).Distinct().OrderByDescending(y => y))
+    {
+        <details id="teacher_allocations_details_@year" open>
+            <summary>@year</summary>
+            @foreach (var a in Model.Allocations.Where(a => a.Year == year).OrderBy(a => a.Course.Session).ThenBy(a => a.Course.Code))
+            {
+                <div>
+                    <a href="/Courses/Details/@a.CourseId">[@a.Course.Session] @a.Course.Code @a.Course.Title</a>
+                </div>
+            }
+        </details>
+    }
+}
+else
+{
+    <h2 style="color:red">Cet enseignant a été retiré...</h2>
+}
+@section Scripts{
+    <script>$(() => RestoreDetailsState());</script>
+}

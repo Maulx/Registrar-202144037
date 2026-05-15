@@ -1,0 +1,60 @@
+﻿@model Models.Course
+
+@if (Model != null)
+{
+    <details id="course_details_infos" open>
+        <summary>@Model.Code</summary>
+
+        <div class="detailsPanel">
+            <p>Session @Model.Session</p>
+            <p><b>@Model.Title</b></p>
+        </div>
+    </details>
+
+    <h4>Étudiants inscrits</h4>
+
+    foreach (var year in Model.Registrations
+        .Select(r => r.Year)
+        .Distinct()
+        .OrderByDescending(y => y))
+    {
+        var allocation = Model.Allocations
+        .FirstOrDefault(a => a.Year == year);
+
+        var teacher = allocation != null ? allocation.Teacher : null;
+
+        <details id="course_registrations_details_@year" open>
+            <summary>
+                Cohorte @year
+
+                @if (teacher != null)
+                {
+                    <span>
+                        - <a href="/Teachers/Details/@teacher.Id">@teacher.FullName</a>
+                    </span>
+                }
+            </summary>
+
+            @foreach (var r in Model.Registrations
+                .Where(r => r.Year == year)
+                .OrderBy(r => r.Student.LastName))
+            {
+                <div>
+                    <a href="/Students/Details/@r.StudentId">
+                        @r.Student.Code @r.Student.FullName
+                    </a>
+                </div>
+            }
+        </details>
+    }
+}
+else
+{
+    <h2 style="color:red">Ce cours a été retiré...</h2>
+}
+
+@section Scripts {
+    <script>
+        $(() => RestoreDetailsState());
+    </script>
+}

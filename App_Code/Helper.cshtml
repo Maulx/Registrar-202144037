@@ -363,9 +363,18 @@
 }
 @helper Avatar(string avatar, string cssClass = "avatar")
 {
-    var url = System.Web.VirtualPathUtility.ToAbsolute("~/App_Assets/Users/" + avatar);
+    if (string.IsNullOrWhiteSpace(avatar))
+    {
+        avatar = "No_Avatar.png";
+    }
 
-    <img src="@url"
-         class="@cssClass"
-         alt="Avatar" />
+    string path =
+        "~/App_Assets/users/" + avatar;
+
+    string url =
+        System.Web.VirtualPathUtility.ToAbsolute(path);
+
+<img src="@url"
+     class="@cssClass"
+     alt="Avatar" />
 }

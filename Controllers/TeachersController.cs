@@ -2,7 +2,9 @@
 using Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using static Controllers.AccessControl;
 
@@ -95,7 +97,14 @@ namespace Controllers
                 ? View(teacher)
                 : (ActionResult)RedirectToAction("List");
         }
+        public ActionResult GetTeacherDetails()
+        {
+            int id = (int)Session["CurrentTeacherId"];
 
+            Teacher teacher = DB.Teachers.Get(id);
+
+            return PartialView(teacher);
+        }
         [UserAccess(Access.Write)]
         public ActionResult Create()
         {
@@ -113,17 +122,33 @@ namespace Controllers
 
         [HttpPost]
         [UserAccess(Access.Write)]
-        public ActionResult Create(Teacher teacher)
+        public ActionResult Create(Teacher teacher, HttpPostedFileBase avatarFile)
         {
-            teacher.Code =
-                DB.Teachers.GenerateUniqueCode();
+            if (avatarFile != null && avatarFile.ContentLength > 0)
+            {
+                string extension =
+                    Path.GetExtension(avatarFile.FileName);
+
+                string fileName =
+                    Guid.NewGuid().ToString() + extension;
+
+                string path =
+                    Server.MapPath("~/App_Assets/users/" + fileName);
+
+                avatarFile.SaveAs(path);
+
+                teacher.Avatar =
+                    "~/App_Assets/users/" + fileName;
+            }
+            else
+            {
+                teacher.Avatar =
+                    "~/App_Assets/users/no_avatar.png";
+            }
 
             DB.Teachers.Add(teacher);
 
-            return RedirectToAction(
-                "Details",
-                new { id = teacher.Id }
-            );
+            return RedirectToAction("Details", new { id = teacher.Id });
         }
 
         [UserAccess(Access.Write)]
@@ -154,27 +179,40 @@ namespace Controllers
 
         [HttpPost]
         [UserAccess(Access.Write)]
-        public ActionResult Edit(
-            Teacher teacher,
-            List<int> selectedCoursesId)
+        public ActionResult Edit(Teacher teacher, HttpPostedFileBase avatarFile)
         {
-            Teacher old =
-                DB.Teachers.Get(teacher.Id);
+            Teacher old = DB.Teachers.Get(teacher.Id);
 
             if (old == null)
                 return RedirectToAction("List");
 
+            if (avatarFile != null && avatarFile.ContentLength > 0)
+            {
+                string extension =
+                    Path.GetExtension(avatarFile.FileName);
+
+                string fileName =
+                    Guid.NewGuid().ToString() + extension;
+
+                string path =
+                    Server.MapPath("~/App_Assets/users/" + fileName);
+
+                avatarFile.SaveAs(path);
+
+                teacher.Avatar =
+                    "~/App_Assets/users/" + fileName;
+            }
+            else
+            {
+                teacher.Avatar =
+                    "~/App_Assets/users/no_avatar.png";
+            }
+
             teacher.Code = old.Code;
 
-            DB.Teachers.Update(
-                teacher,
-                selectedCoursesId
-            );
+            DB.Teachers.Update(teacher);
 
-            return RedirectToAction(
-                "Details",
-                new { id = teacher.Id }
-            );
+            return RedirectToAction("Details", new { id = teacher.Id });
         }
 
         [UserAccess(Access.Write)]

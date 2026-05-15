@@ -20,6 +20,20 @@ namespace Models
         const string Default_Avatar = @"no_avatar.png";
         [ImageAsset(Avatars_Folder, Default_Avatar)]
         public string Avatar { get; set; } = Avatars_Folder + Default_Avatar;
+        [JsonIgnore]
+        public string AvatarUrl
+        {
+            get
+            {
+                if (String.IsNullOrWhiteSpace(Avatar))
+                    return "/App_Assets/users/no_avatar.png";
+
+                if (Avatar.StartsWith("/") || Avatar.StartsWith("~/"))
+                    return Avatar.Replace("~", "");
+
+                return "/App_Assets/users/" + Avatar;
+            }
+        }
 
         [JsonIgnore] public string FullName => LastName + " " + FirstName;
         [JsonIgnore] public string Caption => Code + " " + LastName + " " + FirstName;

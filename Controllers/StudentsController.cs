@@ -122,6 +122,16 @@ namespace Controllers
                 ? View(student)
                 : (ActionResult)RedirectToAction("List");
         }
+        public ActionResult GetStudentDetails()
+        {
+            InitSessionVariables();
+
+            int id = (int)Session["CurrentStudentId"];
+
+            Student student = DB.Students.Get(id);
+
+            return PartialView(student);
+        }
 
         [UserAccess(Access.Write)]
         public ActionResult Create()
