@@ -144,16 +144,10 @@ namespace Controllers
 
         [HttpPost]
         [UserAccess(Access.Write)]
-        public ActionResult Edit(
-            Course course,
-            List<int> selectedStudentsId)
+        public ActionResult Edit(Course course, List<int> selectedStudentsId)
         {
             DB.Courses.Update(course, selectedStudentsId);
-
-            return RedirectToAction(
-                "Details",
-                new { id = course.Id }
-            );
+            return RedirectToAction("Details", new { id = course.Id });
         }
 
         [UserAccess(Access.Write)]
